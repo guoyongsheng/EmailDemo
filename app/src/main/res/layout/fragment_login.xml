@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/login_user"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/login_user_pass_height"
+        android:layout_marginEnd="@dimen/common_margin_right"
+        android:layout_marginStart="@dimen/common_margin_left"
+        android:background="@drawable/drawable_user_pass"
+        android:hint="@string/login_input_user_name"
+        android:paddingEnd="@dimen/login_user_pass_pading_right"
+        android:paddingStart="@dimen/login_user_pass_pading_left"
+        android:textColorHint="@color/colorGray"
+        android:textSize="@dimen/fong_normal"/>
+
+
+    <EditText
+        android:id="@+id/login_pass"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/login_user_pass_height"
+        android:layout_marginEnd="@dimen/common_margin_right"
+        android:layout_marginStart="@dimen/common_margin_left"
+        android:layout_marginTop="@dimen/common_margin_top"
+        android:background="@drawable/drawable_user_pass"
+        android:hint="@string/login_input_pass_world"
+        android:inputType="textPassword"
+        android:paddingEnd="@dimen/login_user_pass_pading_right"
+        android:paddingStart="@dimen/login_user_pass_pading_left"
+        android:textColorHint="@color/colorGray"
+        android:textSize="@dimen/fong_normal"/>
+
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/login_height"
+        android:layout_marginTop="@dimen/common_margin_top"
+        android:background="@color/colorAccent"
+        android:paddingEnd="@dimen/login_pading_end"
+        android:paddingStart="@dimen/login_pading_start"
+        android:text="@string/login"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/fong_normal"/>
+
+</LinearLayout>

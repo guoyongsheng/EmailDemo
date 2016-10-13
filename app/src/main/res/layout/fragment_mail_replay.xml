@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGray"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/item_detail_margin_top"
+        android:background="@color/colorAccent"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/common_margin_top"
+        android:paddingEnd="@dimen/common_margin_right"
+        android:paddingStart="@dimen/common_margin_left"
+        android:paddingTop="@dimen/common_margin_top">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mail_replay_receivers"
+            android:textSize="@dimen/fong_normal"/>
+
+        <EditText
+            android:id="@+id/mail_receivers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/item_detail_margin_top"
+            android:background="@drawable/drawable_user_pass"
+            android:inputType="text"
+            android:labelFor="@+id/mail_receivers"
+            android:paddingBottom="@dimen/item_detail_margin_top"
+            android:paddingEnd="@dimen/item_detail_margin_top"
+            android:paddingStart="@dimen/item_detail_margin_top"
+            android:paddingTop="@dimen/item_detail_margin_top"
+            android:textSize="@dimen/fong_normal"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/item_detail_margin_top"
+        android:background="@color/colorAccent"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/common_margin_top"
+        android:paddingEnd="@dimen/common_margin_right"
+        android:paddingStart="@dimen/common_margin_left"
+        android:paddingTop="@dimen/common_margin_top">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mail_replay_sendr"
+            android:textSize="@dimen/fong_normal"/>
+
+        <TextView
+            android:id="@+id/mail_sender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/item_detail_margin_top"
+            android:paddingBottom="@dimen/item_detail_margin_top"
+            android:paddingEnd="@dimen/item_detail_margin_top"
+            android:paddingStart="@dimen/item_detail_margin_top"
+            android:paddingTop="@dimen/item_detail_margin_top"
+            android:textColor="@color/colorGray"
+            android:textSize="@dimen/fong_normal"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/item_detail_margin_top"
+        android:background="@color/colorAccent"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/common_margin_top"
+        android:paddingEnd="@dimen/common_margin_right"
+        android:paddingStart="@dimen/common_margin_left"
+        android:paddingTop="@dimen/common_margin_top">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mail_replay_subject"
+            android:textSize="@dimen/fong_normal"/>
+
+        <EditText
+            android:id="@+id/mail_subject"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/item_detail_margin_top"
+            android:layout_weight="@integer/weight"
+            android:background="@drawable/drawable_user_pass"
+            android:inputType="text"
+            android:labelFor="@+id/mail_subject"
+            android:paddingBottom="@dimen/item_detail_margin_top"
+            android:paddingEnd="@dimen/item_detail_margin_top"
+            android:paddingStart="@dimen/item_detail_margin_top"
+            android:paddingTop="@dimen/item_detail_margin_top"
+            android:textSize="@dimen/fong_normal"/>
+
+        <Button
+            android:id="@+id/mail_attachment"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/fragment_mail_replay_button_height"
+            android:layout_marginStart="@dimen/common_margin_top"
+            android:background="@color/colorPrimaryDark"
+            android:text="@string/mail_attachment"/>
+
+    </LinearLayout>
+
+
+    <EditText
+        android:id="@+id/mail_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/item_detail_margin_top"
+        android:layout_weight="@integer/weight"
+        android:background="@color/colorWhite"
+        android:gravity="top"
+        android:hint="@string/input_mail_content"
+        android:paddingEnd="@dimen/common_margin_top"
+        android:paddingStart="@dimen/common_margin_top"
+        android:paddingTop="@dimen/common_margin_top"
+        android:visibility="visible"
+        android:textSize="@dimen/fong_normal"/>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/mail_recycler"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/common_margin_left"
+        android:background="@color/colorWhite"
+        android:layout_height="@dimen/mail_replay_recycler_height"
+        android:orientation="horizontal">
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

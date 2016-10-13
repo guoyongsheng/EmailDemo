@@ -1,0 +1,23 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fong_big">15sp</dimen>
+    <dimen name="login_user_pass_height">40dp</dimen>
+    <dimen name="common_margin_left">24dp</dimen>
+    <dimen name="common_margin_right">24dp</dimen>
+    <dimen name="fong_normal">13sp</dimen>
+    <dimen name="login_user_pass_pading_left">8dp</dimen>
+    <dimen name="user_pass_line_height">1dp</dimen>
+    <dimen name="common_margin_top">8dp</dimen>
+    <dimen name="login_user_pass_pading_right">8dp</dimen>
+    <dimen name="login_height">40dp</dimen>
+    <dimen name="login_pading_start">16dp</dimen>
+    <dimen name="login_pading_end">16dp</dimen>
+    <dimen name="item_detail_margin_top">4dp</dimen>
+    <dimen name="line_height">1dp</dimen>
+    <dimen name="fragment_mail_replay_button_height">25dp</dimen>
+    <dimen name="mail_replay_recycler_height">120dp</dimen>
+    <dimen name="item_image_size">60dp</dimen>
+    <dimen name="fong_small">9sp</dimen>
+</resources>
