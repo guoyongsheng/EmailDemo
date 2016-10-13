@@ -2,7 +2,9 @@ package com.zhengfang.wesley.emaildemo.base;
 
 import android.app.Application;
 
+import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
+import com.zhengfang.wesley.emaildemo.BuildConfig;
 import com.zhengfang.wesley.emaildemo.entitiy.MailInfo;
 
 import java.io.InputStream;
@@ -28,6 +30,6 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        Logger.init(getPackageName());
+        Logger.init(getPackageName()).logLevel(BuildConfig.DEBUG ? LogLevel.FULL : LogLevel.NONE);
     }
 }
