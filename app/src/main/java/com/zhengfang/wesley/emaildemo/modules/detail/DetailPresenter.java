@@ -28,7 +28,7 @@ class DetailPresenter implements DetailContract.Presenter {
     }
 
     @Override
-    public void loadData(final int type) {
+    public void loadData(final int type, final int startPosition) {
 
         Observable.create(new Observable.OnSubscribe<List<MailReceiver>>() {
 
@@ -36,9 +36,9 @@ class DetailPresenter implements DetailContract.Presenter {
             public void call(Subscriber<? super List<MailReceiver>> subscriber) {
 
                 if (BaseApplication.login_from == 0) {
-                    subscriber.onNext(MailHelper.getInstance().getAllMailBySSL());
+                    subscriber.onNext(MailHelper.getInstance().getAllMailBySSL(startPosition));
                 } else {
-                    subscriber.onNext(MailHelper.getInstance().getAllMail());
+                    subscriber.onNext(MailHelper.getInstance().getAllMail(startPosition));
                 }
                 subscriber.onCompleted();
             }
@@ -61,6 +61,7 @@ class DetailPresenter implements DetailContract.Presenter {
 
             @Override
             public void onNext(List<Email> emails) {
+                view.saveMail(emails);
                 view.showData(emails);
             }
 
@@ -110,5 +111,23 @@ class DetailPresenter implements DetailContract.Presenter {
                 view.showProgressDialog();
             }
         });
+    }
+
+    @Override
+    public void saveMail(final List<Email> list) {
+
+        // Realm realm = Realm.getDefaultInstance();
+        //realm.beginTransaction();
+        // realm.copyToRealm(list);
+        // realm.commitTransaction();
+        //realm.close();
+    }
+
+    @Override
+    public void getLocalData() {
+
+        //Realm realm = Realm.getDefaultInstance();
+        //view.showData(realm.where(Email.class).findAll());
+        //realm.close();
     }
 }

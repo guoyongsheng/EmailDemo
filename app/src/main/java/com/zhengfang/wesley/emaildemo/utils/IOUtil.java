@@ -2,12 +2,14 @@ package com.zhengfang.wesley.emaildemo.utils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 /**
@@ -73,8 +75,7 @@ public class IOUtil {
      * @return 输入流
      */
     public InputStream Byte2InputStream(byte[] data) {
-        ByteArrayInputStream bais = new ByteArrayInputStream(data);
-        return bais;
+        return new ByteArrayInputStream(data);
     }
 
     /**
@@ -97,7 +98,7 @@ public class IOUtil {
         return null;
     }
 
-    public static byte[] getFileBytes(File file) throws IOException {
+    @SuppressWarnings("ThrowFromFinallyBlock") public static byte[] getFileBytes(File file) throws IOException {
         BufferedInputStream bis = null;
         try {
             bis = new BufferedInputStream(new FileInputStream(file));
@@ -194,5 +195,40 @@ public class IOUtil {
         return file != null && (file.exists() ? file.isDirectory() : file.mkdirs());
     }
 
+
+    /**
+     * 将一个输入流转化为字符串
+     */
+    public static String getStreamString(InputStream tInputStream) {
+        if (tInputStream != null) {
+            try {
+                BufferedReader tBufferedReader = new BufferedReader(new InputStreamReader(tInputStream));
+                StringBuilder tStringBuffer = new StringBuilder();
+                String sTempOneLine;
+                while ((sTempOneLine = tBufferedReader.readLine()) != null) {
+                    tStringBuffer.append(sTempOneLine);
+                }
+                return tStringBuffer.toString();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+
+    /**
+     * 将一个字符串转化为输入流
+     */
+    public static InputStream getStringStream(String sInputString) {
+        if (sInputString != null && !sInputString.trim().equals("")) {
+            try {
+                return new ByteArrayInputStream(sInputString.getBytes());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        return null;
+    }
 
 }

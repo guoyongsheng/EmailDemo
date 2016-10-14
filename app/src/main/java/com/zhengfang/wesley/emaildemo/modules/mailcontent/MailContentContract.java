@@ -3,13 +3,11 @@ package com.zhengfang.wesley.emaildemo.modules.mailcontent;
 import com.zhengfang.wesley.emaildemo.base.BasePresenter;
 import com.zhengfang.wesley.emaildemo.base.BaseView;
 
-import java.io.InputStream;
-
 /**
  * Created by wesley on 2016/10/10.
+ * 邮件内容协议接口
  */
-
-public interface MailContentContract {
+interface MailContentContract {
 
     interface View extends BaseView<MailContentPresenter> {
 
@@ -38,9 +36,9 @@ public interface MailContentContract {
 
         /**
          * 下载附件
-         * @param is 输入流
+         * @param stream 输入流转的字符串
          * @param path 下载路径
          */
-        void downLoadAttachment(InputStream is, String path);
+        void downLoadAttachment(String stream, String path);
     }
 }

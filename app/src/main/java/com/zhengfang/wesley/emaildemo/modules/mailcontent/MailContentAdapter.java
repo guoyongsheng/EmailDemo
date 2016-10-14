@@ -8,22 +8,22 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zhengfang.wesley.emaildemo.R;
+import com.zhengfang.wesley.emaildemo.entitiy.Attachment;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by wesley on 2016/10/12.
  * 适配器
  */
-public class MailContentAdapter extends RecyclerView.Adapter<MailContentAdapter.ViewHolder> {
+class MailContentAdapter extends RecyclerView.Adapter<MailContentAdapter.ViewHolder> {
 
-    private List<String> list = new ArrayList<>();
+    private ArrayList<Attachment> list = new ArrayList<>();
     private Context context;
     private LayoutInflater inflater;
     private OnItemClickListener onItemClickListener;
 
-    public MailContentAdapter(Context context) {
+    MailContentAdapter(Context context) {
         this.context = context;
         if (context != null) {
             inflater = LayoutInflater.from(context);
@@ -46,7 +46,7 @@ public class MailContentAdapter extends RecyclerView.Adapter<MailContentAdapter.
             return;
         }
 
-        String name = list.get(position);
+        String name = list.get(position).getFileName();
         holder.tv_name.setText(name);
         holder.tv_name.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,8 +68,8 @@ public class MailContentAdapter extends RecyclerView.Adapter<MailContentAdapter.
         this.onItemClickListener = onItemClickListener;
     }
 
-    void setDataSource(ArrayList<String> attachments) {
-        this.list = attachments;
+    void setDataSource(ArrayList<Attachment> list) {
+        this.list = list;
     }
 
 

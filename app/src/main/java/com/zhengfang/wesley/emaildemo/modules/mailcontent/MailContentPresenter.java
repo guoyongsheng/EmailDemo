@@ -8,6 +8,7 @@ import java.io.InputStream;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -24,14 +25,19 @@ class MailContentPresenter implements MailContentContract.Presenter {
     }
 
     @Override
-    public void downLoadAttachment(final InputStream is, final String path) {
+    public void downLoadAttachment(final String stream, final String path) {
 
-        Observable.create(new Observable.OnSubscribe<Boolean>() {
+        Observable.create(new Observable.OnSubscribe<InputStream>() {
             @Override
-            public void call(Subscriber<? super Boolean> subscriber) {
+            public void call(Subscriber<? super InputStream> subscriber) {
 
-                subscriber.onNext(IOUtil.writeFileFromIS(path, is, false));
+                subscriber.onNext(IOUtil.getStringStream(stream));
                 subscriber.onCompleted();
+            }
+        }).map(new Func1<InputStream, Boolean>() {
+            @Override
+            public Boolean call(InputStream inputStream) {
+                return IOUtil.writeFileFromIS(path, inputStream, false);
             }
         }).subscribeOn(AndroidSchedulers.mainThread()).observeOn(Schedulers.io()).subscribe(new Subscriber<Boolean>() {
             @Override
@@ -47,9 +53,9 @@ class MailContentPresenter implements MailContentContract.Presenter {
             @Override
             public void onNext(Boolean value) {
                 if (!value) {
-                    view.downLoadFailure(Constant.DOWN_LOAD_FAILURE + " path = " + value);
+                    view.downLoadFailure(Constant.DOWN_LOAD_FAILURE + " path = " + path);
                 } else {
-                    view.downLoadSuccess(Constant.DOWN_LOAD_SUCCESS + " path = " + value);
+                    view.downLoadSuccess(Constant.DOWN_LOAD_SUCCESS + " path = " + path);
                 }
             }
 

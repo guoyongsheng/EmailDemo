@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Created by wesley on 2016/10/10.
  * 邮件实体类
  */
-public class Email implements Serializable{
+public class Email implements Serializable {
 
     private String messageID;
     private String from;
@@ -20,8 +20,10 @@ public class Email implements Serializable{
     private boolean replysign;
     private boolean html;
     private boolean news;
-    private ArrayList<String> attachments;
+    //private ArrayList<String> attachments;
     private String charset;
+    private ArrayList<Attachment> attachments;
+    private ArrayList<String> attachmentsInputStreams; //附件流
 
     public String getMessageID() {
         return messageID;
@@ -119,11 +121,21 @@ public class Email implements Serializable{
         this.charset = charset;
     }
 
-    public ArrayList<String> getAttachments() {
+    public ArrayList<Attachment> getAttachments() {
         return attachments;
     }
 
-    public void setAttachments(ArrayList<String> attachments) {
+    public void setAttachments(ArrayList<Attachment> attachments) {
         this.attachments = attachments;
     }
+
+    public void setAttachmentsInputStreams(ArrayList<String> attachmentsInputStreams) {
+        this.attachmentsInputStreams = attachmentsInputStreams;
+    }
+
+
+    public ArrayList<String> getAttachmentsInputStreams(){
+        return attachmentsInputStreams;
+    }
+
 }

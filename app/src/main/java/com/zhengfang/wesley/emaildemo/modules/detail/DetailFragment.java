@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +29,9 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
     private ProgressDialog dialog;
     private AlertDialog alertDialog;
     private RecyclerView recyclerView;
+    private int startPosition;
+    private boolean isLoading = false;
+    private SwipeRefreshLayout srfl;
 
     public static DetailFragment newInstance(int type) {
 
@@ -54,28 +58,68 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
 
     @Override
     public void initViews(View view) {
+        srfl = (SwipeRefreshLayout) view.findViewById(R.id.detail_swipe_refresh);
         recyclerView = (RecyclerView) view.findViewById(R.id.detail_recycler_view);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-        loadData(type);
+        srfl.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary, R.color.colorGray);
+
+        getLocalData();
+        loadData(type, startPosition, false);
+
+        //滚动加载
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if (dy > 0) {
+                    int lastPosition = layoutManager.findLastVisibleItemPosition();
+                    int totalCount = layoutManager.getItemCount();
+                    if (lastPosition >= totalCount / 2 && !isLoading && !srfl.isRefreshing()) {
+                        isLoading = true;
+                        loadData(type, startPosition, false);
+                    }
+                }
+            }
+        });
+
+
+        srfl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                srfl.setRefreshing(true);
+                startPosition = 0;
+                loadData(type, startPosition, true);
+            }
+        });
     }
 
     @Override
-    public void loadData(int type) {
-        presenter.loadData(type);
+    public void loadData(int type, int startPosition, boolean isRefreshing) {
+        adapter.setIsRefreshing(isRefreshing);
+        presenter.loadData(type, startPosition);
     }
 
     @Override
     public void showData(List<Email> list) {
+        srfl.setRefreshing(false);
+        isLoading = list.size() == 0;
+        startPosition = startPosition + list.size();
         adapter.addAll(list);
     }
 
     @Override
     public void showProgressDialog() {
-        dialog = new ProgressDialog(context);
-        dialog.setMessage(getResources().getString(R.string.loading));
-        dialog.show();
+        //dialog = new ProgressDialog(context);
+        // dialog.setMessage(getResources().getString(R.string.loading));
+        // dialog.show();
     }
 
     @Override
@@ -97,6 +141,16 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
     }
 
     @Override
+    public void saveMail(List<Email> list) {
+        presenter.saveMail(list);
+    }
+
+    @Override
+    public void getLocalData() {
+        presenter.getLocalData();
+    }
+
+    @Override
     public void onItemClick(Email email, int position) {
         Intent intent = new Intent(context, MailContentActivity.class);
         Bundle bundle = new Bundle();
@@ -108,7 +162,7 @@ public class DetailFragment extends BaseFragment<DetailPresenter> implements Det
 
     //显示删除对话框
     @Override
-    public void showDialogDelete(final String messageId, final int position){
+    public void showDialogDelete(final String messageId, final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(R.string.sure_delete);
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {

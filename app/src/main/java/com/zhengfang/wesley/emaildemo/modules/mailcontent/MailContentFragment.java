@@ -14,13 +14,11 @@ import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.zhengfang.wesley.emaildemo.R;
-import com.zhengfang.wesley.emaildemo.base.BaseApplication;
 import com.zhengfang.wesley.emaildemo.base.BaseFragment;
+import com.zhengfang.wesley.emaildemo.entitiy.Attachment;
 import com.zhengfang.wesley.emaildemo.entitiy.Email;
 
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by wesley on 2016/10/10.
@@ -97,7 +95,7 @@ public class MailContentFragment extends BaseFragment<MailContentPresenter> impl
 
     //初始化附件
     private void initAttachment() {
-        ArrayList<String> list = email.getAttachments();
+        ArrayList<Attachment> list = email.getAttachments();
         if (list != null && list.size() > 0) {
             setUpRecyclerView();
         }
@@ -132,14 +130,21 @@ public class MailContentFragment extends BaseFragment<MailContentPresenter> impl
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                List<ArrayList<InputStream>> list = BaseApplication.attachmentsInputStreams;
+                /*List<ArrayList<InputStream>> list = BaseApplication.attachmentsInputStreams;
                 if (list != null && list.size() > position) {
 
-                    ArrayList<InputStream> listInput= list.get(position);
-                    if(listInput != null && listInput.size() > pos){
-                        String path = Environment.getExternalStorageDirectory().toString() + "/temp/" + email.getAttachments().get(pos);
+                    ArrayList<InputStream> listInput = list.get(position);
+                    if (listInput != null && listInput.size() > pos) {
+                        String path = Environment.getExternalStorageDirectory().toString() + "/temp/" + email.getAttachments().get(pos).getFileName();
                         presenter.downLoadAttachment(listInput.get(pos), path);
                     }
+                }
+*/
+                ArrayList<String> listString = email.getAttachmentsInputStreams();
+                if (listString != null && listString.size() > pos) {
+                    String path = Environment.getExternalStorageDirectory().toString() + "/temp/" + email.getAttachments().get(pos).getFileName();
+                    String stream = listString.get(pos);
+                    presenter.downLoadAttachment(stream, path);
                 }
             }
         });

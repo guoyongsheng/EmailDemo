@@ -13,6 +13,9 @@ import java.util.List;
 
 import javax.mail.Session;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+
 /**
  * Created by wesley on 2016/10/9.
  * 基类的application
@@ -30,6 +33,22 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        initLogger();
+
+        initRealm();
+
+    }
+
+    //初始化realm
+    private void initRealm() {
+        Realm.init(this);
+        RealmConfiguration configuration = new RealmConfiguration.Builder().build();
+        Realm.setDefaultConfiguration(configuration);
+    }
+
+    //初始化logger
+    private void initLogger() {
         Logger.init(getPackageName()).logLevel(BuildConfig.DEBUG ? LogLevel.FULL : LogLevel.NONE);
     }
+
 }

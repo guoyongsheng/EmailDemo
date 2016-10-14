@@ -27,12 +27,12 @@ import javax.mail.util.ByteArrayDataSource;
 public class MailReceiver {
     private MimeMessage mimeMessage = null;
     private String charset;
-    private String dataFormat = "yyyy-MM-dd HH:mm:ss";
+    private String dataFormat = "yyyy-MM-dd hh:mm:ss";
     private StringBuffer mailContent = new StringBuffer();// 邮件内容
     private boolean html;
     private boolean flag = true;
-    private ArrayList<String> attachments = new ArrayList<String>();
-    private ArrayList<InputStream> attachmentsInputStreams = new ArrayList<InputStream>();
+    private ArrayList<Attachment> attachments = new ArrayList<>();
+    private ArrayList<String> attachmentsInputStreams = new ArrayList<>();
 
     public MailReceiver(MimeMessage mimeMessage) {
         this.mimeMessage = mimeMessage;
@@ -107,7 +107,7 @@ public class MailReceiver {
     public String getMailAddress(String type) throws Exception {
         String mailAddr = "";
         String addType = type.toUpperCase(Locale.CHINA);
-        InternetAddress[] address = null;
+        InternetAddress[] address;
         switch (addType) {
         case "TO":
             address = (InternetAddress[]) mimeMessage.getRecipients(Message.RecipientType.TO);
@@ -173,7 +173,7 @@ public class MailReceiver {
     public String getSentData() throws MessagingException {
         Date sentdata = mimeMessage.getSentDate();
         if (sentdata != null) {
-            SimpleDateFormat format = new SimpleDateFormat(dataFormat, Locale.CHINA);
+            SimpleDateFormat format = new SimpleDateFormat(dataFormat, Locale.getDefault());
             return format.format(sentdata);
         } else {
             return "未知";
@@ -187,7 +187,7 @@ public class MailReceiver {
      * @throws Exception
      */
     public String getMailContent() throws Exception {
-        compileMailContent((Part) mimeMessage);
+        compileMailContent(mimeMessage);
         String content = mailContent.toString();
         if (content.contains("<html>")) {
             html = true;
@@ -243,8 +243,10 @@ public class MailReceiver {
                     filename = filename.replace("gb18030", "gb2312");
                 }
                 filename = MimeUtility.decodeText(filename);
-                attachments.add(filename);
-                attachmentsInputStreams.add(part.getInputStream());
+                Attachment attachment = new Attachment();
+                attachment.setFileName(filename);
+                attachments.add(attachment);
+                //attachmentsInputStreams.add(IOUtil.getStreamString(part.getInputStream()));
             }
             // Log.e("content", "附件：" + filename);
         }
@@ -301,7 +303,7 @@ public class MailReceiver {
      */
     public boolean isNew() throws MessagingException {
         boolean isnew = false;
-        Flags flags = ((Message) mimeMessage).getFlags();
+        Flags flags = mimeMessage.getFlags();
         Flags.Flag[] flag = flags.getSystemFlags();
         for (Flags.Flag aFlag : flag) {
             if (aFlag == Flags.Flag.SEEN) {
@@ -312,11 +314,11 @@ public class MailReceiver {
         return isnew;
     }
 
-    public ArrayList<String> getAttachments() {
+    public ArrayList<Attachment> getAttachments() {
         return attachments;
     }
 
-    public ArrayList<InputStream> getAttachmentsInputStreams() {
+    public ArrayList<String> getAttachmentsInputStreams() {
         return attachmentsInputStreams;
     }
 

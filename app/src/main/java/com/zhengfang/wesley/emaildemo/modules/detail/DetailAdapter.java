@@ -23,6 +23,7 @@ class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder> {
     private List<Email> list = new ArrayList<>();
     private LayoutInflater inflater;
     private OnItemClickListener onItemClickListener;
+    private boolean isRefreshing;
 
     DetailAdapter(Context context) {
         if (context != null) {
@@ -78,7 +79,9 @@ class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder> {
     }
 
     void addAll(List<Email> list) {
-        this.list.clear();
+        if (isRefreshing) {
+            this.list.clear();
+        }
         this.list.addAll(list);
         notifyDataSetChanged();
     }
@@ -92,6 +95,10 @@ class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder> {
             list.remove(position);
             notifyItemRemoved(position);
         }
+    }
+
+    void setIsRefreshing(boolean isRefreshing) {
+        this.isRefreshing = isRefreshing;
     }
 
 

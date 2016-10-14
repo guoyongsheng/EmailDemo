@@ -43,7 +43,7 @@ import javax.mail.internet.MimeUtility;
  */
 public class MailHelper {
     private static volatile MailHelper instance;
-
+    List<ArrayList<InputStream>> attachmentsInputStreamsList = new ArrayList<>();
     private MailHelper() {
 
     }
@@ -64,9 +64,10 @@ public class MailHelper {
     /**
      * 获取所有的邮件
      *
-     * @return 所有邮件
+     * @param position 开始加载的位置
+     * @return 从position----position + 10之间的邮件
      */
-    public List<MailReceiver> getAllMail() {
+    public List<MailReceiver> getAllMail(int position) {
         List<MailReceiver> list = new ArrayList<>();
 
         try {
@@ -88,15 +89,18 @@ public class MailHelper {
             } else {
                 // 取得所有的邮件
                 Message[] messages = folder.getMessages();
-                for (Message message : messages) {
-                    // 自定义的邮件对象
+                int length = messages.length;
 
-                    MailReceiver reciveMail = new MailReceiver((MimeMessage) message);
+                for (int i = length - 1 - position; i >= 0; i--) {
+                    MailReceiver reciveMail = new MailReceiver((MimeMessage) messages[i]);
                     list.add(reciveMail);// 添加到邮件列表中
+                    if (list.size() == 10) {
+                        break;
+                    }
                 }
                 return list;
             }
-        } catch (MessagingException e) {
+        } catch (MessagingException | NullPointerException e) {
             Logger.d(e.getMessage());
         }
 
@@ -109,8 +113,6 @@ public class MailHelper {
      */
     public List<Email> getListMail(List<MailReceiver> listMailReceiver) {
         List<Email> list = new ArrayList<>();
-        List<ArrayList<InputStream>> attachmentsInputStreamsList = new ArrayList<>();
-
         if (listMailReceiver == null) {
             return list;
         }
@@ -131,15 +133,13 @@ public class MailHelper {
                 email.setNews(mailReceiver.isNew());
                 email.setAttachments(mailReceiver.getAttachments());
                 email.setCharset(mailReceiver.getCharset());
-                attachmentsInputStreamsList.add(0,
-                        mailReceiver.getAttachmentsInputStreams());
-                list.add(0, email);
+               // email.setAttachmentsInputStreams(mailReceiver.getAttachmentsInputStreams());
+                list.add(email);
             } catch (Exception e) {
                 Logger.d(e.getMessage());
             }
         }
-        BaseApplication.attachmentsInputStreams = attachmentsInputStreamsList;
-
+        //BaseApplication.attachmentsInputStreams = attachmentsInputStreamsList;
         return list;
     }
 
@@ -159,7 +159,7 @@ public class MailHelper {
             // 设置邮件消息的发送者
             mailMessage.setFrom(address);
             // 创建邮件的接收者地址，并设置到邮件消息中
-            Address[] tos = null;
+            Address[] tos;
             String[] receivers = mailInfo.getReceivers();
             if (receivers != null) {
                 // 为每个邮件接收者创建一个地址
@@ -318,9 +318,10 @@ public class MailHelper {
     /**
      * 获取所有的邮件
      *
-     * @return 所有邮件
+     * @param position 开始加载的位置
+     * @return 从position----position + 10之间的邮件
      */
-    public List<MailReceiver> getAllMailBySSL() {
+    public List<MailReceiver> getAllMailBySSL(int position) {
         List<MailReceiver> list = new ArrayList<>();
 
         try {
@@ -351,11 +352,14 @@ public class MailHelper {
             } else {
                 // 取得所有的邮件
                 Message[] messages = folder.getMessages();
-                for (Message message : messages) {
-                    // 自定义的邮件对象
+                int length = messages.length;
 
-                    MailReceiver reciveMail = new MailReceiver((MimeMessage) message);
+                for (int i = length - 1 - position; i >= 0; i--) {
+                    MailReceiver reciveMail = new MailReceiver((MimeMessage) messages[i]);
                     list.add(reciveMail);// 添加到邮件列表中
+                    if (list.size() == 10) {
+                        break;
+                    }
                 }
                 return list;
             }

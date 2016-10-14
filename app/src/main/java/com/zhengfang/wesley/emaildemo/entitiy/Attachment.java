@@ -2,17 +2,21 @@ package com.zhengfang.wesley.emaildemo.entitiy;
 
 
 import java.io.File;
+import java.io.Serializable;
+
+import io.realm.RealmObject;
+
 /**
  * Created by wesley on 2016/10/12.
  * 附件实体类
  */
-public class Attachment {
+public class Attachment extends RealmObject implements Serializable {
 
     private String filePath;//文件路径
     private String fileName;//文件名
     private String fileSize;//文件大小
 
-    private Attachment() {
+    public Attachment() {
         super();
     }
 
@@ -31,7 +35,7 @@ public class Attachment {
      * @param size 大小
      * @return 具体大小
      */
-    public static String convertStorage(long size) {
+    private static String convertStorage(long size) {
         long kb = 1024;
         long mb = kb * 1024;
         long gb = mb * 1024;
@@ -55,7 +59,7 @@ public class Attachment {
      * @param filepath 文件路径
      * @return 文件名
      */
-    public static String getNameFromFilepath(String filepath) {
+    private static String getNameFromFilepath(String filepath) {
         int pos = filepath.lastIndexOf('/');
         if (pos != -1) {
             return filepath.substring(pos + 1);
@@ -87,7 +91,7 @@ public class Attachment {
         return filePath;
     }
 
-    public void setFilePath(String filePath) {
+    private void setFilePath(String filePath) {
         this.filePath = filePath;
     }
 
@@ -95,7 +99,7 @@ public class Attachment {
         return fileName;
     }
 
-    public void setFileName(String fileName) {
+    void setFileName(String fileName) {
         this.fileName = fileName;
     }
 
@@ -103,7 +107,7 @@ public class Attachment {
         return fileSize;
     }
 
-    public void setFileSize(String fileSize) {
+    private void setFileSize(String fileSize) {
         this.fileSize = fileSize;
     }
 
