@@ -1,0 +1,18 @@
+Realm java的使用:
+1、支持的数据类型: 基本数据类型、基本数据类型的包装类、String类型、继承了RealmObject和RealmList的子类
+
+2、常用注解：
+(1)@Required: 让字段非空,可以标注基本数据类型的包装类,RealmList类型的字段会隐式含有Required注解
+(2)@Ignore: 让字段不要写到磁盘上去
+(3)@Index: 数据插入慢查询快,可以标注基本数据类型和String类型和Date类型
+(4)@PrimaryKey:主键 可以标注基本数据类型和String类型和基本数据类型的包装类型，只能标注一个字段,如果标注的是string类型的字段,那么这个
+   字段会隐式的有@Index注解,有@PrimaryKey注解的字段可以使用copyToRealmOrUpdate()方法,如果一个类调用了copyToRealmOrUpdate()方法
+   但是没有@PrimaryKey注解时会抛出异常. 用@PrimaryKey注解会影响效率,插入和跟新慢查询快
+(5)@RealmClass:继承RealmObject基类的另外一种方法是实现ReamlModel接口并添加@RealmClass注解
+
+3、限制：
+(1)不支持final、volatile、transient类型的字段
+(2)只能继承RealmObject并且要有一个没有参数的构造方法,这个构造方法是空实现
+
+4、读操作:查询,可以随时访问和查询对象   写操作:增加、删除、修改,写操作必须放在写事务中,写事务可以提交或者取消
+
