@@ -77,26 +77,17 @@ class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public boolean checkMailIsEmpty(String mail) {
-        if (TextUtils.isEmpty(mail)) {
-            return true;
-        }
-        return false;
+        return TextUtils.isEmpty(mail);
     }
 
     @Override
     public boolean checkMailIsOk(String mail) {
 
-        if (!EmailFormatUtils.emailFormat(mail)) {
-            return true;
-        }
-        return false;
+        return !EmailFormatUtils.emailFormat(mail);
     }
 
     @Override
     public boolean checkPassIsEmpty(String password) {
-        if (TextUtils.isEmpty(password)) {
-            return true;
-        }
-        return false;
+        return TextUtils.isEmpty(password);
     }
 }

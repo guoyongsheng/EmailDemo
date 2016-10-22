@@ -27,7 +27,7 @@ class MailReplayAdapter extends RecyclerView.Adapter<MailReplayAdapter.ViewHolde
     private Context context;
     private OnItemClickListener onItemClickListener;
 
-    public MailReplayAdapter(Context context) {
+    MailReplayAdapter(Context context) {
         this.context = context;
         if (context != null) {
             inflater = LayoutInflater.from(context);
@@ -64,7 +64,6 @@ class MailReplayAdapter extends RecyclerView.Adapter<MailReplayAdapter.ViewHolde
                 onItemClickListener.onItemClick(position);
             }
         });
-
     }
 
     @Override
@@ -96,7 +95,6 @@ class MailReplayAdapter extends RecyclerView.Adapter<MailReplayAdapter.ViewHolde
             notifyItemRemoved(position);
         }
     }
-
 
     //静态内部类
     static class ViewHolder extends RecyclerView.ViewHolder {

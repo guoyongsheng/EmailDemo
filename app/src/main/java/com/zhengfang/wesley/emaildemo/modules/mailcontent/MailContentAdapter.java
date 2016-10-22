@@ -19,12 +19,10 @@ import java.util.ArrayList;
 class MailContentAdapter extends RecyclerView.Adapter<MailContentAdapter.ViewHolder> {
 
     private ArrayList<Attachment> list = new ArrayList<>();
-    private Context context;
     private LayoutInflater inflater;
     private OnItemClickListener onItemClickListener;
 
     MailContentAdapter(Context context) {
-        this.context = context;
         if (context != null) {
             inflater = LayoutInflater.from(context);
         }

@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
  * Created by wesley on 2016/10/10.
  * 工具类
  */
-public class SharePreferenceUtils {
+class SharePreferenceUtils {
 
     private SharePreferenceUtils(){
 

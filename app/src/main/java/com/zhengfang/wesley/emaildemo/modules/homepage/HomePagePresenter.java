@@ -7,12 +7,7 @@ package com.zhengfang.wesley.emaildemo.modules.homepage;
 
 class HomePagePresenter implements HomePageContract.Presenter {
 
-    private HomePageContract.View view;
-
     HomePagePresenter(HomePageContract.View view){
-        this.view = view;
         view.setPresenter(this);
     }
-
-
 }

@@ -15,8 +15,6 @@ import com.zhengfang.wesley.emaildemo.utils.ActivityUtils;
 public class HomePageActivity extends BaseActivity {
 
 
-    private Toolbar tb_head; //toolbar
-    private TextView tv_title; //标题
     private HomePageFragment fragment;
 
     @Override
@@ -31,8 +29,8 @@ public class HomePageActivity extends BaseActivity {
 
     @Override
     public void initViews() {
-        tb_head = (Toolbar) findViewById(R.id.head_toolbar);
-        tv_title = (TextView) findViewById(R.id.head_title);
+        Toolbar tb_head = (Toolbar) findViewById(R.id.head_toolbar);
+        TextView tv_title = (TextView) findViewById(R.id.head_title);
         setUpToolbar(tb_head, "");
         setUpTitle(tv_title, R.string.home_page);
 

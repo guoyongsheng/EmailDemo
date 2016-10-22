@@ -18,13 +18,13 @@ public class TranCharsetUtil {
      * @return charset encoding is unicode
      */
     public static String XmlFormalize(String sTemp) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         if (sTemp == null || sTemp.equals("")) {
             return "";
         }
         String s = TranCharsetUtil.TranEncodeTOGB(sTemp);
-        for (int i = 0; i < s.length(); i++) {
+        for (int i = 0; i < (s != null ? s.length() : 0); i++) {
             char cChar = s.charAt(i);
             if (TranCharsetUtil.isGB2312(cChar)) {
                 sb.append(PRE_FIX_UTF);
@@ -78,7 +78,7 @@ public class TranCharsetUtil {
      * @return 如果是gb2312返回真，否则返回假
      */
     public static boolean isGB2312(char c) {
-        Character ch = Character.valueOf(c);
+        Character ch = c;
         String sCh = ch.toString();
         try {
             byte[] bb = sCh.getBytes("gb2312");
@@ -101,32 +101,28 @@ public class TranCharsetUtil {
         String encode = "GB2312";
         try {
             if (str.equals(new String(str.getBytes(encode), encode))) {
-                String s = encode;
-                return s;
+                return encode;
             }
         } catch (Exception exception) {
         }
         encode = "ISO-8859-1";
         try {
             if (str.equals(new String(str.getBytes(encode), encode))) {
-                String s1 = encode;
-                return s1;
+                return encode;
             }
         } catch (Exception exception1) {
         }
         encode = "UTF-8";
         try {
             if (str.equals(new String(str.getBytes(encode), encode))) {
-                String s2 = encode;
-                return s2;
+                return encode;
             }
         } catch (Exception exception2) {
         }
         encode = "GBK";
         try {
             if (str.equals(new String(str.getBytes(encode), encode))) {
-                String s3 = encode;
-                return s3;
+                return encode;
             }
         } catch (Exception exception3) {
         }
